@@ -2,9 +2,7 @@ import 'package:app_facul/home_page.dart';
 import 'package:flutter/material.dart';
 
 class AppWidget extends StatelessWidget {
-  final String title;
-
-  const AppWidget({super.key, required this.title});
+  const AppWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
