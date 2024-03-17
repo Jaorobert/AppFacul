@@ -1,4 +1,4 @@
-import 'package:app_facul/home_page/home_page.dart';
+import 'package:app_facul/src/pages/home_page/home_page.dart';
 import 'package:flutter/material.dart';
 
 class AppWidget extends StatelessWidget {

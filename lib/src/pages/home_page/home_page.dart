@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:app_facul/login_page/Login.dart';
+import 'package:app_facul/src/pages/login_page/Login.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -16,10 +16,11 @@ class HomePage extends StatelessWidget {
             fit: BoxFit.contain,
             opacity: 0.5),
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      child: Center(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text(
+          Text(
             "UniCV Recados",
             style: TextStyle(
                 fontWeight: FontWeight.bold,
@@ -27,34 +28,34 @@ class HomePage extends StatelessWidget {
                 color: Color.fromRGBO(72, 92, 57, 30),
                 decoration: TextDecoration.none),
           ),
-          SizedBox(
-            width: 100,
+          const SizedBox(
+            height: 200,
           ),
           Center(
               child: Container(
                   padding: const EdgeInsets.all(2),
-                  alignment: Alignment.bottomCenter,
-                  height: 500,
+                  alignment: Alignment.center,
+                  //height: 500,
                   child: Column(children: [
                     ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                                builder: (context) => LoginPage()),
-                          );
-                        },
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                            Color.fromRGBO(153, 192, 124, 1),
-                          ),
-                          fixedSize: MaterialStateProperty.all<Size>(
-                            const Size(200, 60),
-                          ),
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => LoginPage()),
+                        );
+                      },
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                          Color.fromRGBO(153, 192, 124, 1),
                         ),
-                        child: Text(
-                          "Aluno",
-                          style: TextStyle(color: Colors.black),
-                        )),
+                        fixedSize: MaterialStateProperty.all<Size>(
+                          const Size(200, 60),
+                        ),
+                      ),
+                      child: const Text(
+                        "Aluno",
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ),
                     const SizedBox(
                       height: 10,
                     ),
@@ -83,7 +84,8 @@ class HomePage extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => LoginPage()),
+                          MaterialPageRoute(
+                              builder: (context) => const LoginPage()),
                         );
                       },
                       style: ButtonStyle(
@@ -101,7 +103,7 @@ class HomePage extends StatelessWidget {
                     ),
                   ])))
         ],
-      ),
+      )),
     ));
   }
 }
