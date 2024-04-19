@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/widgets.dart';
 import 'package:app_facul/src/repositories/api_login.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return LoginState();
+    return _LoginState();
   }
 }
 
-class LoginState extends State<LoginPage> {
-  final form = GlobalKey<FormState>();
+class _LoginState extends State<LoginPage> {
+  final formKey = GlobalKey<FormState>();
   final controleEmail = TextEditingController();
   final controleSenha = TextEditingController();
 
@@ -21,14 +19,13 @@ class LoginState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(''),
+        title: const Text('Login'),
       ),
       body: Center(
         child: Container(
-          padding: const EdgeInsets.only(
-            top: 60,
-            left: 40,
-            right: 40,
+          padding: const EdgeInsets.symmetric(
+            horizontal: 40,
+            vertical: 60,
           ),
           child: ListView(
             children: [
@@ -39,33 +36,37 @@ class LoginState extends State<LoginPage> {
               ),
               const SizedBox(height: 20),
               Form(
-                  key: form,
-                  child: Column(children: [
+                key: formKey,
+                child: Column(
+                  children: [
                     TextFormField(
-                        controller: controleEmail,
-                        decoration: const InputDecoration(
-                          labelText: "RA ou E-mail",
-                          labelStyle: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 20,
-                          ),
+                      controller: controleEmail,
+                      decoration: const InputDecoration(
+                        labelText: 'RA ou E-mail',
+                        labelStyle: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 20,
                         ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Campo obrigatório';
-                          }
-                          return null;
-                        }),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Campo obrigatório';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 10),
                     TextFormField(
                       controller: controleSenha,
                       decoration: const InputDecoration(
-                          labelText: "Senha:",
-                          labelStyle: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 20,
-                          )),
+                        labelText: 'Senha:',
+                        labelStyle: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 20,
+                        ),
+                      ),
                       obscureText: true,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -76,16 +77,26 @@ class LoginState extends State<LoginPage> {
                     ),
                     const SizedBox(height: 20),
                     ElevatedButton(
-                      onPressed: () {
-                        if (!form.currentState!.validate()) {
-                          return;
+                      onPressed: () async {
+                        if (formKey.currentState!.validate()) {
+                          formKey.currentState!.save();
+                          bool loginSuccess =
+                              await LoginRepository.enviarAluno({
+                            'email': controleEmail.text,
+                            'password': controleSenha.text,
+                          });
+                          if (loginSuccess) {
+                            Navigator.pushReplacementNamed(context, '/NotPage');
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                    'Falha no login! Login e/ou Senha incorretos!'),
+                                backgroundColor: Colors.red,
+                              ),
+                            );
+                          }
                         }
-
-                        form.currentState!.save();
-                        LoginRepository.enviarAluno({
-                          'email': controleEmail.text,
-                          'password': controleSenha.text,
-                        });
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
@@ -96,16 +107,20 @@ class LoginState extends State<LoginPage> {
                         ),
                       ),
                       child: const Text(
-                        "Entrar",
+                        'Entrar',
                         style: TextStyle(color: Colors.black),
                       ),
-                    )
-                  ])),
-              const SizedBox(height: 20),
-              TextButton(
-                onPressed: () => (context),
-                child: const Text('Esqueci a senha.'),
-              )
+                    ),
+                    const SizedBox(height: 10),
+                    TextButton(
+                      onPressed: () {
+                        // Adicione a lógica para redefinir a senha aqui
+                      },
+                      child: const Text('Esqueci a senha.'),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),

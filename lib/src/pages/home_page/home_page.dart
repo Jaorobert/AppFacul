@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:app_facul/src/pages/login_page/Login.dart';
+import 'package:app_facul/src/pages/notificationsPage/notificationsPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -35,7 +36,6 @@ class HomePage extends StatelessWidget {
               child: Container(
                   padding: const EdgeInsets.all(2),
                   alignment: Alignment.center,
-                  //height: 500,
                   child: Column(children: [
                     ElevatedButton(
                       onPressed: () {
@@ -84,8 +84,7 @@ class HomePage extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).push(
-                          MaterialPageRoute(
-                              builder: (context) => const LoginPage()),
+                          MaterialPageRoute(builder: (context) => NotPage()),
                         );
                       },
                       style: ButtonStyle(
