@@ -1,16 +1,17 @@
+import 'package:app_facul/src/pages/login_page/login.dart';
 import 'package:flutter/material.dart';
 import 'package:app_facul/src/repositories/api_login.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class RegisterStudentPage extends StatefulWidget {
+  const RegisterStudentPage({super.key});
 
   @override
   State<StatefulWidget> createState() {
-    return _LoginState();
+    return _RegisterState();
   }
 }
 
-class _LoginState extends State<LoginPage> {
+class _RegisterState extends State<RegisterStudentPage> {
   final formKey = GlobalKey<FormState>();
   final controleEmail = TextEditingController();
   final controleSenha = TextEditingController();
@@ -19,7 +20,7 @@ class _LoginState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Login'),
+        title: const Text('Cadastrar'),
       ),
       body: Center(
         child: Container(
@@ -42,7 +43,25 @@ class _LoginState extends State<LoginPage> {
                     TextFormField(
                       controller: controleEmail,
                       decoration: const InputDecoration(
-                        labelText: 'RA ou E-mail',
+                        labelText: 'Ra',
+                        labelStyle: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 20,
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Campo obrigatório';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 10),
+                    TextFormField(
+                      controller: controleEmail,
+                      decoration: const InputDecoration(
+                        labelText: 'Email',
                         labelStyle: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.w400,
@@ -77,26 +96,26 @@ class _LoginState extends State<LoginPage> {
                     ),
                     const SizedBox(height: 20),
                     ElevatedButton(
-                      onPressed: () {
-                            if (formKey.currentState!.validate()) {
-                            //   formKey.currentState!.save();
-                            // bool loginSuccess =
-                            //     await LoginRepository.enviarAluno({
-                            //   'email': controleEmail.text,
-                            //   'password': controleSenha.text,
-                            // });
-                            // if (loginSuccess) {
-                            //   Navigator.pushReplacementNamed(context, '/NotPage');
-                            // } else {
-                            //   ScaffoldMessenger.of(context).showSnackBar(
-                            //     const SnackBar(
-                            //       content: Text(
-                            //           'Falha no login! Login e/ou Senha incorretos!'),
-                            //       backgroundColor: Colors.red,
-                            //     ),
-                            //   );
-                            // }
-                            }
+                      onPressed: () async {
+                          if (formKey.currentState!.validate()) {
+                          //formKey.currentState!.save();
+                          // bool loginSuccess =
+                          //     await LoginRepository.enviarAluno({
+                          //   'email': controleEmail.text,
+                          //   'password': controleSenha.text,
+                          // });
+                          // if (loginSuccess) {
+                          //   Navigator.pushReplacementNamed(context, '/NotPage');
+                          // } else {
+                          //   ScaffoldMessenger.of(context).showSnackBar(
+                          //     const SnackBar(
+                          //       content: Text(
+                          //           'Falha no login! Login e/ou Senha incorretos!'),
+                          //       backgroundColor: Colors.red,
+                          //     ),
+                          //   );
+                          // }
+                          }
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
@@ -107,7 +126,7 @@ class _LoginState extends State<LoginPage> {
                         ),
                       ),
                       child: const Text(
-                        'Entrar',
+                        'Cadastrar',
                         style: TextStyle(color: Colors.black),
                       ),
                     ),

@@ -1,7 +1,8 @@
 import 'dart:ui';
 
-import 'package:app_facul/src/pages/login_page/Login.dart';
+import 'package:app_facul/src/pages/login_page/login.dart';
 import 'package:app_facul/src/pages/notificationsPage/notificationsPage.dart';
+import 'package:app_facul/src/pages/register_page/registerStudent.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -21,7 +22,7 @@ class HomePage extends StatelessWidget {
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
+          const Text(
             "UniCV Recados",
             style: TextStyle(
                 fontWeight: FontWeight.bold,
@@ -53,6 +54,28 @@ class HomePage extends StatelessWidget {
                       ),
                       child: const Text(
                         "Aluno",
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => RegisterStudentPage()),
+                        );
+                      },
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                          Color.fromRGBO(153, 192, 124, 1),
+                        ),
+                        fixedSize: MaterialStateProperty.all<Size>(
+                          const Size(200, 60),
+                        ),
+                      ),
+                      child: const Text(
+                        "Cadastrar Aluno",
                         style: TextStyle(color: Colors.black),
                       ),
                     ),
