@@ -78,25 +78,25 @@ class _LoginState extends State<LoginPage> {
                     const SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: () {
-                            if (formKey.currentState!.validate()) {
-                            //   formKey.currentState!.save();
-                            // bool loginSuccess =
-                            //     await LoginRepository.enviarAluno({
-                            //   'email': controleEmail.text,
-                            //   'password': controleSenha.text,
-                            // });
-                            // if (loginSuccess) {
-                            //   Navigator.pushReplacementNamed(context, '/NotPage');
-                            // } else {
-                            //   ScaffoldMessenger.of(context).showSnackBar(
-                            //     const SnackBar(
-                            //       content: Text(
-                            //           'Falha no login! Login e/ou Senha incorretos!'),
-                            //       backgroundColor: Colors.red,
-                            //     ),
-                            //   );
-                            // }
-                            }
+                        if (formKey.currentState!.validate()) {
+                          //   formKey.currentState!.save();
+                          // bool loginSuccess =
+                          //     await LoginRepository.enviarAluno({
+                          //   'email': controleEmail.text,
+                          //   'password': controleSenha.text,
+                          // });
+                          // if (loginSuccess) {
+                          //   Navigator.pushReplacementNamed(context, '/NotPage');
+                          // } else {
+                          //   ScaffoldMessenger.of(context).showSnackBar(
+                          //     const SnackBar(
+                          //       content: Text(
+                          //           'Falha no login! Login e/ou Senha incorretos!'),
+                          //       backgroundColor: Colors.red,
+                          //     ),
+                          //   );
+                          // }
+                        }
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
@@ -113,9 +113,7 @@ class _LoginState extends State<LoginPage> {
                     ),
                     const SizedBox(height: 10),
                     TextButton(
-                      onPressed: () {
-                        // Adicione a lógica para redefinir a senha aqui
-                      },
+                      onPressed: () {},
                       child: const Text('Esqueci a senha.'),
                     ),
                   ],
