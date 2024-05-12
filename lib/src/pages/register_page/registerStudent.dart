@@ -1,6 +1,6 @@
-import 'package:app_facul/src/pages/login_page/login.dart';
+
 import 'package:flutter/material.dart';
-import 'package:app_facul/src/repositories/api_login.dart';
+import 'package:app_facul/src/services/api_login.dart';
 
 class RegisterStudentPage extends StatefulWidget {
   const RegisterStudentPage({super.key});
@@ -98,23 +98,23 @@ class _RegisterState extends State<RegisterStudentPage> {
                     ElevatedButton(
                       onPressed: () async {
                           if (formKey.currentState!.validate()) {
-                          //formKey.currentState!.save();
-                          // bool loginSuccess =
-                          //     await LoginRepository.enviarAluno({
-                          //   'email': controleEmail.text,
-                          //   'password': controleSenha.text,
-                          // });
-                          // if (loginSuccess) {
-                          //   Navigator.pushReplacementNamed(context, '/NotPage');
-                          // } else {
-                          //   ScaffoldMessenger.of(context).showSnackBar(
-                          //     const SnackBar(
-                          //       content: Text(
-                          //           'Falha no login! Login e/ou Senha incorretos!'),
-                          //       backgroundColor: Colors.red,
-                          //     ),
-                          //   );
-                          // }
+                          formKey.currentState!.save();
+                          bool loginSuccess =
+                              await LoginServices.enviarAluno({
+                            'email': controleEmail.text,
+                            'password': controleSenha.text,
+                          });
+                          if (loginSuccess) {
+                            Navigator.pushReplacementNamed(context, '/NotPage');
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                    'Falha no login! Login e/ou Senha incorretos!'),
+                                backgroundColor: Colors.red,
+                              ),
+                            );
+                          }
                           }
                       },
                       style: ButtonStyle(

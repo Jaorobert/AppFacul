@@ -1,7 +1,7 @@
-/*import "package:http/http.dart";
+import "package:http/http.dart";
 import "dart:convert";
 
-class LoginRepository {
+class LoginServices {
   static Future enviarAluno(Object form) async {
     final client = Client();
     try {
@@ -11,11 +11,9 @@ class LoginRepository {
             'Content-Type': 'application/json; charset=UTF-8',
           },
           body: jsonEncode(form));
-      print(jsonEncode(form));
       return resp;
     } catch (err) {
       print(err);
     }
   }
 }
-*/

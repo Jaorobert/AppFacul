@@ -7,7 +7,5 @@ class PrincipalPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Placeholder();
-    apBar:
-    AppBar();
   }
 }
