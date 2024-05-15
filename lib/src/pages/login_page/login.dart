@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:app_facul/src/repositories/api_login.dart';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http; // Importando o pacote HTTP
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -77,25 +78,26 @@ class _LoginState extends State<LoginPage> {
                     ),
                     const SizedBox(height: 20),
                     ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         if (formKey.currentState!.validate()) {
-                          //   formKey.currentState!.save();
-                          // bool loginSuccess =
-                          //     await LoginRepository.enviarAluno({
-                          //   'email': controleEmail.text,
-                          //   'password': controleSenha.text,
-                          // });
-                          // if (loginSuccess) {
-                          //   Navigator.pushReplacementNamed(context, '/NotPage');
-                          // } else {
-                          //   ScaffoldMessenger.of(context).showSnackBar(
-                          //     const SnackBar(
-                          //       content: Text(
-                          //           'Falha no login! Login e/ou Senha incorretos!'),
-                          //       backgroundColor: Colors.red,
-                          //     ),
-                          //   );
-                          // }
+                          formKey.currentState!.save();
+                          http.Response response =
+                              await LoginRepository.enviarAluno({
+                            'email': controleEmail.text,
+                            'password': controleSenha.text,
+                          });
+
+                          if (response.statusCode == 200) {
+                            Navigator.pushReplacementNamed(context, '/NotPage');
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                    'Falha no login! Login e/ou Senha incorretos!'),
+                                backgroundColor: Colors.red,
+                              ),
+                            );
+                          }
                         }
                       },
                       style: ButtonStyle(
@@ -108,7 +110,7 @@ class _LoginState extends State<LoginPage> {
                       ),
                       child: const Text(
                         'Entrar',
-                        style: TextStyle(color: Colors.black),
+                        style: TextStyle(color: Colors.white),
                       ),
                     ),
                     const SizedBox(height: 10),

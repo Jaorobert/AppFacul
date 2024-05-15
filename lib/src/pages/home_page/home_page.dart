@@ -46,7 +46,7 @@ class HomePage extends StatelessWidget {
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromRGBO(153, 192, 124, 1),
+                          Color.fromRGBO(72, 92, 57, 1),
                         ),
                         fixedSize: MaterialStateProperty.all<Size>(
                           const Size(200, 60),
@@ -54,7 +54,8 @@ class HomePage extends StatelessWidget {
                       ),
                       child: const Text(
                         "Aluno",
-                        style: TextStyle(color: Colors.black),
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 255, 255, 255)),
                       ),
                     ),
                     const SizedBox(
@@ -63,12 +64,13 @@ class HomePage extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => RegisterStudentPage()),
+                          MaterialPageRoute(
+                              builder: (context) => RegisterStudentPage()),
                         );
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromRGBO(153, 192, 124, 1),
+                          Color.fromRGBO(72, 92, 57, 1),
                         ),
                         fixedSize: MaterialStateProperty.all<Size>(
                           const Size(200, 60),
@@ -76,7 +78,8 @@ class HomePage extends StatelessWidget {
                       ),
                       child: const Text(
                         "Cadastrar Aluno",
-                        style: TextStyle(color: Colors.black),
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 255, 255, 255)),
                       ),
                     ),
                     const SizedBox(
@@ -90,7 +93,7 @@ class HomePage extends StatelessWidget {
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromRGBO(153, 192, 124, 1),
+                          Color.fromRGBO(72, 92, 57, 1),
                         ),
                         fixedSize: MaterialStateProperty.all<Size>(
                           const Size(200, 60),
@@ -98,7 +101,7 @@ class HomePage extends StatelessWidget {
                       ),
                       child: const Text(
                         "Professor",
-                        style: TextStyle(color: Colors.black),
+                        style: TextStyle(color: Colors.white),
                       ),
                     ),
                     const SizedBox(
@@ -112,7 +115,7 @@ class HomePage extends StatelessWidget {
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromRGBO(153, 192, 124, 1),
+                          Color.fromRGBO(72, 92, 57, 1),
                         ),
                         fixedSize: MaterialStateProperty.all<Size>(
                           const Size(200, 60),
@@ -120,7 +123,7 @@ class HomePage extends StatelessWidget {
                       ),
                       child: const Text(
                         "Coordenacao",
-                        style: TextStyle(color: Colors.black),
+                        style: TextStyle(color: Colors.white),
                       ),
                     ),
                   ])))
