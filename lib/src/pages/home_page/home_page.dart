@@ -2,12 +2,13 @@ import 'dart:ui';
 
 import 'package:app_facul/src/pages/login_page/login.dart';
 import 'package:app_facul/src/pages/notificationsPage/notificationsPage.dart';
-import 'package:app_facul/src/pages/register_page/registerStudent.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,12 +42,13 @@ class HomePage extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => LoginPage()),
+                          MaterialPageRoute(
+                              builder: (context) => const LoginPage()),
                         );
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromRGBO(153, 192, 124, 1),
+                          const Color.fromRGBO(153, 192, 124, 1),
                         ),
                         fixedSize: MaterialStateProperty.all<Size>(
                           const Size(200, 60),
@@ -60,37 +62,19 @@ class HomePage extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => RegisterStudentPage()),
-                        );
-                      },
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromRGBO(153, 192, 124, 1),
-                        ),
-                        fixedSize: MaterialStateProperty.all<Size>(
-                          const Size(200, 60),
-                        ),
-                      ),
-                      child: const Text(
-                        "Cadastrar Aluno",
-                        style: TextStyle(color: Colors.black),
-                      ),
-                    ),
                     const SizedBox(
                       height: 10,
                     ),
                     ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => LoginPage()),
+                          MaterialPageRoute(
+                              builder: (context) => const LoginPage()),
                         );
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromRGBO(153, 192, 124, 1),
+                          const Color.fromRGBO(153, 192, 124, 1),
                         ),
                         fixedSize: MaterialStateProperty.all<Size>(
                           const Size(200, 60),
@@ -112,7 +96,7 @@ class HomePage extends StatelessWidget {
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromRGBO(153, 192, 124, 1),
+                          const Color.fromRGBO(153, 192, 124, 1),
                         ),
                         fixedSize: MaterialStateProperty.all<Size>(
                           const Size(200, 60),

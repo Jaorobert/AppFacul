@@ -1,5 +1,3 @@
-
-
 import 'dart:convert';
 import 'package:app_facul/src/pages/home_page/home_page.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +5,7 @@ import 'package:app_facul/src/services/api_login.dart';
 import 'package:http/http.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  const LoginPage({super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -84,33 +82,38 @@ class _LoginState extends State<LoginPage> {
                     ElevatedButton(
                       onPressed: () async {
                         if (formKey.currentState!.validate()) {
-                          
                           formKey.currentState!.save();
-                          Response loginSuccess =  await LoginServices.enviarAluno({
-                            'email': controleEmail.text,
-                            'password': controleSenha.text,
-                          });
-                          
-                          final Map<String, dynamic> jsonLoginResponse  = json.decode(loginSuccess.body);
 
-                          print(jsonLoginResponse['bo_login'].runtimeType);
-                          if (jsonLoginResponse['bo_login']) {
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomePage())
-                        );
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text(
-                                    'Falha no login! Login e/ou Senha incorretos!'),
-                                backgroundColor: Colors.red,
-                              ),
-                            );
+                          try {
+                            Response loginSuccess =
+                                await LoginServices.enviarAluno({
+                              'email': controleEmail.text,
+                              'password': controleSenha.text,
+                            });
+
+                            final Map<String, dynamic> jsonLoginResponse =
+                                json.decode(loginSuccess.body);
+
+                            if (jsonLoginResponse['bo_login']) {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => HomePage()));
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                      'Falha no login! Login e/ou Senha incorretos!'),
+                                  backgroundColor: Colors.red,
+                                ),
+                              );
+                            }
+                          } catch (error) {
+                            return print(error);
                           }
                         }
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromRGBO(72, 92, 57, 1),
+                          const Color.fromRGBO(72, 92, 57, 1),
                         ),
                         fixedSize: MaterialStateProperty.all<Size>(
                           const Size(150, 35),
