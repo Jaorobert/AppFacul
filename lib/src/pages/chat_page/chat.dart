@@ -35,20 +35,22 @@ class MessageListScreen extends StatelessWidget {
   ];
 
   final List<Color> bubbleColors = [
-    Colors.blue[100]!, // Azul claro
-    Colors.blue[200]!, // Azul médio
-    Colors.blue[300]!, // Azul escuro
+    Colors.blue[100]!,
+    Colors.blue[200]!,
+    Colors.blue[300]!,
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Lista de Mensagens'),
-        backgroundColor:
-            Colors.green, // Alterando a cor de fundo da AppBar para verde
+        title: const Text(
+          'Mensagens',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: const Color.fromRGBO(72, 92, 57, 1),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back), // Ícone de seta para retornar
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -58,17 +60,15 @@ class MessageListScreen extends StatelessWidget {
         itemCount: messages.length,
         itemBuilder: (context, index) {
           final message = messages[index];
-          final color = bubbleColors[index %
-              bubbleColors.length]; // Alternando entre as cores da lista
+          final color = bubbleColors[index % bubbleColors.length];
           return Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: 8.0), // Adicionando espaçamento horizontal
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Align(
-              alignment: Alignment.topLeft, // Alinhando as mensagens à esquerda
+              alignment: Alignment.topLeft,
               child: Container(
-                margin: EdgeInsets.symmetric(vertical: 4.0),
-                padding: EdgeInsets.all(8.0),
-                width: double.infinity, // Ocupando toda a largura disponível
+                margin: const EdgeInsets.symmetric(vertical: 4.0),
+                padding: const EdgeInsets.all(8.0),
+                width: double.infinity,
                 decoration: BoxDecoration(
                   color: color,
                   borderRadius: BorderRadius.circular(8.0),
@@ -79,11 +79,11 @@ class MessageListScreen extends StatelessWidget {
                   children: [
                     Text(
                       message.text,
-                      style: TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.white),
                     ),
                     Text(
                       '${message.dateTime.hour}:${message.dateTime.minute} - ${message.dateTime.day}/${message.dateTime.month}/${message.dateTime.year}',
-                      style: TextStyle(color: Colors.white70),
+                      style: const TextStyle(color: Colors.white70),
                     ),
                   ],
                 ),
