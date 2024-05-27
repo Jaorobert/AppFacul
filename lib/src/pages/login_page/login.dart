@@ -1,5 +1,3 @@
-
-
 import 'dart:convert';
 import 'package:app_facul/src/pages/home_page/home_page.dart';
 import 'package:flutter/material.dart';
@@ -84,19 +82,20 @@ class _LoginState extends State<LoginPage> {
                     ElevatedButton(
                       onPressed: () async {
                         if (formKey.currentState!.validate()) {
-                          
                           formKey.currentState!.save();
-                          Response loginSuccess =  await LoginServices.enviarAluno({
+                          Response loginSuccess =
+                              await LoginServices.enviarAluno({
                             'email': controleEmail.text,
                             'password': controleSenha.text,
                           });
-                          
-                          final Map<String, dynamic> jsonLoginResponse  = json.decode(loginSuccess.body);
+
+                          final Map<String, dynamic> jsonLoginResponse =
+                              json.decode(loginSuccess.body);
 
                           print(jsonLoginResponse['bo_login'].runtimeType);
                           if (jsonLoginResponse['bo_login']) {
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomePage())
-                        );
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => HomePage()));
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
@@ -115,10 +114,16 @@ class _LoginState extends State<LoginPage> {
                         fixedSize: MaterialStateProperty.all<Size>(
                           const Size(150, 35),
                         ),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
                       ),
                       child: const Text(
                         'Entrar',
-                        style: TextStyle(color: Colors.black),
+                        style: TextStyle(color: Colors.white),
                       ),
                     ),
                     const SizedBox(height: 10),
