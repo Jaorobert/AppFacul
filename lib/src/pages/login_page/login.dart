@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:app_facul/src/pages/home_page/home_page.dart';
+import 'package:app_facul/src/pages/semeters_page/semeter.dart';
 import 'package:flutter/material.dart';
 import 'package:app_facul/src/services/api_login.dart';
 import 'package:http/http.dart';
@@ -96,7 +97,7 @@ class _LoginState extends State<LoginPage> {
 
                             if (jsonLoginResponse['bo_login']) {
                               Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => HomePage()));
+                                  builder: (context) => const SemeterPage()));
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(

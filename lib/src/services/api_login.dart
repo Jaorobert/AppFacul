@@ -1,5 +1,6 @@
 import "package:http/http.dart";
 import "dart:convert";
+import "package:shared_preferences/shared_preferences.dart";
 
 class LoginServices {
   static Future enviarAluno(Object form) async {
@@ -11,7 +12,13 @@ class LoginServices {
                 'Content-Type': 'application/json; charset=UTF-8',
               },
               body: jsonEncode(form));
-      return resp;
+
+      if (resp.statusCode == 200) {
+        final shared = await SharedPreferences.getInstance();
+        final authorization = resp.headers["authorization"]!;
+        await shared.setString("authorization", authorization);
+        return resp;
+      }
     } catch (err) {
       print(err);
     }
