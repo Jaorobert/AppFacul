@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:app_facul/src/model/semeters.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -11,16 +12,29 @@ void main() {
   runApp(const SemeterPage());
 }
 
+Widget generateButton(dsCurso) {
+  return Container(
+    margin: const EdgeInsets.only(bottom: 5, top: 5),
+    child: ElevatedButton(
+      onPressed: () {},
+      style: ElevatedButton.styleFrom(
+          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+          side: const BorderSide(
+              width: 0.523, color: Color.fromARGB(255, 59, 190, 63))),
+      child: Center(
+          child: Text(dsCurso,
+              style: const TextStyle(color: Color.fromARGB(255, 85, 84, 84)))),
+    ),
+  );
+}
+
 class SemeterPage extends StatelessWidget {
   const SemeterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    try {
-      semetersService.getSemeters().then((values) => print(values));
-    } catch (error) {
-      print(error);
-    }
+    semeters() async => await semetersService.getSemeters();
+
     return MaterialApp(
       home: Scaffold(
         body: Stack(
@@ -56,24 +70,10 @@ class SemeterPage extends StatelessWidget {
                           height: 300,
                           child: ListView(
                             children: [
-                              ElevatedButton(
-                                onPressed: () {},
-                                style: ElevatedButton.styleFrom(
-                                    shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.zero),
-                                    side: const BorderSide(
-                                        width: 0.523,
-                                        color:
-                                            Color.fromARGB(255, 59, 190, 63))),
-                                child: const Center(
-                                    child: Text("Engenharia de Software",
-                                        style: TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 85, 84, 84)))),
-                              ),
-                              const SizedBox(
-                                height: 9,
-                              ),
+                              generateButton(semeters().then(
+                                  (List<Semeter> listSemeter) => {
+                                        listSemeter.map((data) => data.ds_curso)
+                                      }))
                             ],
                           ),
                         ),
