@@ -25,7 +25,6 @@ Future<List<Semeter>> getSemeters() async {
         List<dynamic> listSemeters = json.decode(response.body)["semeters"];
         List<Semeter> semeters =
             listSemeters.map((data) => Semeter.fromJson(data)).toList();
-
         return semeters;
       } else {
         throw Exception('Erro na requisição HTTP: ${response.statusCode}');
