@@ -30,4 +30,5 @@ flutter:
 
   assets:
     - assets/imgs/logo-unicv.png
-
+    - assets/imgs/estudantes.jpg
+    - assets/imgs/fachada.jpg

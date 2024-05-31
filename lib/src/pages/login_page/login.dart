@@ -85,6 +85,7 @@ class _LoginState extends State<LoginPage> {
                         if (formKey.currentState!.validate()) {
                           formKey.currentState!.save();
 
+
                           try {
                             Response loginSuccess =
                                 await LoginServices.enviarAluno({
@@ -119,10 +120,16 @@ class _LoginState extends State<LoginPage> {
                         fixedSize: MaterialStateProperty.all<Size>(
                           const Size(150, 35),
                         ),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
                       ),
                       child: const Text(
                         'Entrar',
-                        style: TextStyle(color: Colors.black),
+                        style: TextStyle(color: Colors.white),
                       ),
                     ),
                     const SizedBox(height: 10),
