@@ -14,7 +14,8 @@ Future<List<Semeter>> getSemeters() async {
   if (authorization != null) {
     try {
       final response = await http.get(
-        Uri.parse("http://192.168.237.64:4000/api/aluno/buscarSemestre"),
+        Uri.parse(
+            "https://app-back-facul.onrender.com/api/aluno/buscarSemestre"),
         headers: {
           "authorization": authorization,
           'Content-Type': 'application/json',
@@ -25,7 +26,6 @@ Future<List<Semeter>> getSemeters() async {
         List<dynamic> listSemeters = json.decode(response.body)["semeters"];
         List<Semeter> semeters =
             listSemeters.map((data) => Semeter.fromJson(data)).toList();
-
         return semeters;
       } else {
         throw Exception('Erro na requisição HTTP: ${response.statusCode}');

@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'dart:math';
 import 'dart:ui';
 import 'package:app_facul/src/model/semeters.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,29 +14,38 @@ void main() {
   runApp(const SemeterPage());
 }
 
-Widget generateButton(dsCurso) {
-  return Container(
-    margin: const EdgeInsets.only(bottom: 5, top: 5),
-    child: ElevatedButton(
-      onPressed: () {},
-      style: ElevatedButton.styleFrom(
-          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-          side: const BorderSide(
-              width: 0.523, color: Color.fromARGB(255, 59, 190, 63))),
-      child: Center(
-          child: Text(dsCurso,
-              style: const TextStyle(color: Color.fromARGB(255, 85, 84, 84)))),
-    ),
-  );
+class SemeterPage extends StatefulWidget {
+  const SemeterPage({super.key});
+  @override
+  State<StatefulWidget> createState() {
+    return _SemetersState();
+  }
 }
 
-class SemeterPage extends StatelessWidget {
-  const SemeterPage({super.key});
+class _SemetersState extends State<SemeterPage> {
+  List<Semeter> _Semeters = [];
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _futureSemeters();
+  }
+
+  _futureSemeters() async {
+    try {
+      final data = await semetersService.getSemeters();
+      setState(() {
+        _Semeters = data;
+        _isLoading = false;
+      });
+    } catch (err) {
+      rethrow;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    semeters() async => await semetersService.getSemeters();
-
     return MaterialApp(
       home: Scaffold(
         body: Stack(
@@ -60,24 +71,46 @@ class SemeterPage extends StatelessWidget {
                     "Turma",
                     style: TextStyle(fontSize: 40, fontWeight: FontWeight.w300),
                   ),
-                  const SizedBox(
-                      height: 20), // Espaçamento entre o texto e o ListView
+                  //const SizedBox(height: 20),
+
                   SizedBox(
-                      width: 230,
-                      height: 300,
                       child: Center(
-                        child: SizedBox(
-                          height: 300,
-                          child: ListView(
-                            children: [
-                              generateButton(semeters().then(
-                                  (List<Semeter> listSemeter) => {
-                                        listSemeter.map((data) => data.ds_curso)
-                                      }))
-                            ],
-                          ),
-                        ),
-                      )),
+                    child: SizedBox(
+                      width: 270,
+                      height: 300,
+                      child: ListView.builder(
+                          itemCount: _Semeters.length,
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                              title: SizedBox(
+                                width: 100,
+                                child: ElevatedButton(
+                                  style: ButtonStyle(
+                                      shape: MaterialStateProperty.all(
+                                          RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(5.0))),
+                                      side: const MaterialStatePropertyAll(
+                                          BorderSide.none),
+                                      padding: const MaterialStatePropertyAll(
+                                          EdgeInsets.only(
+                                        bottom: 15,
+                                        top: 15,
+                                      ))),
+                                  child: Text(
+                                    "${_Semeters[index].ds_curso!.toLowerCase()} - ${_Semeters[index].semestre.toString()} sem",
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                  onPressed: () => {},
+                                ),
+                              ),
+                            );
+                          }),
+                    ),
+                  )),
                 ],
               ),
             ),
