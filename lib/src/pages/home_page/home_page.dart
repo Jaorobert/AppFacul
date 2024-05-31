@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:app_facul/src/pages/login_page/login.dart';
 import 'package:app_facul/src/pages/notificationsPage/notificationsPage.dart';
-import 'package:app_facul/src/pages/register_page/registerStudent.dart';
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+
 
 class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,16 +86,82 @@ class HomePage extends StatelessWidget {
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
-        ),
-      ),
-      child: Text(
-        text,
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    );
+          Center(
+              child: Container(
+                  padding: const EdgeInsets.all(2),
+                  alignment: Alignment.center,
+                  child: Column(children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                              builder: (context) => const LoginPage()),
+                        );
+                      },
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                          const Color.fromRGBO(153, 192, 124, 1),
+                        ),
+                        fixedSize: MaterialStateProperty.all<Size>(
+                          const Size(200, 60),
+                        ),
+                      ),
+                      child: const Text(
+                        "Aluno",
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                              builder: (context) => const LoginPage()),
+                        );
+                      },
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                          const Color.fromRGBO(153, 192, 124, 1),
+                        ),
+                        fixedSize: MaterialStateProperty.all<Size>(
+                          const Size(200, 60),
+                        ),
+                      ),
+                      child: const Text(
+                        "Professor",
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => NotPage()),
+                        );
+                      },
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                          const Color.fromRGBO(153, 192, 124, 1),
+                        ),
+                        fixedSize: MaterialStateProperty.all<Size>(
+                          const Size(200, 60),
+                        ),
+                      ),
+                      child: const Text(
+                        "Coordenacao",
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ),
+                  ])))
+        ],
+      )),
+    ));
   }
 }
