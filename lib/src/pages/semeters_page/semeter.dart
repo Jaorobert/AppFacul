@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 import 'dart:ui';
 import 'package:app_facul/src/model/semeters.dart';
 import 'package:flutter/cupertino.dart';
