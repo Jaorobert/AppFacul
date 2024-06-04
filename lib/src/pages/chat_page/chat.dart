@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MyApp());
-}
+class Chat extends StatelessWidget {
+  const Chat({super.key});
 
-class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -26,11 +24,11 @@ class MessageListScreen extends StatelessWidget {
     ),
     Message(
       text: 'Estou bem, obrigado!',
-      dateTime: DateTime.now().subtract(Duration(minutes: 30)),
+      dateTime: DateTime.now().subtract(const Duration(minutes: 30)),
     ),
     Message(
       text: 'E você?',
-      dateTime: DateTime.now().subtract(Duration(hours: 2)),
+      dateTime: DateTime.now().subtract(const Duration(hours: 2)),
     ),
   ];
 
