@@ -91,14 +91,14 @@ class _SemetersState extends State<SemeterPage> {
                                 child: ElevatedButton(
                                   onPressed: () => {
                                     Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const Chat())),
-                                    socketService.studentClass({
-                                      "room": _Semeters[index].ds_curso,
-                                      "username": _Semeters[index].id_user
-                                    })
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => Chat(
+                                            semeter: _Semeters[index].semestre,
+                                            idCourse: _Semeters[index].id_curso,
+                                            socket: socketService),
+                                      ),
+                                    )
                                   },
                                   style: ButtonStyle(
                                       shape: MaterialStateProperty.all(

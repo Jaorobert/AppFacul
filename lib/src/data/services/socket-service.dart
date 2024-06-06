@@ -15,7 +15,10 @@ class Socket {
     _socket.connect();
   }
 
-  void studentClass(data) {
-    _socket.emit("student_room", data);
+  chatMessage(idCourse, semeter) async {
+    late List messages;
+    _socket.emit("messages", {"idCourse": idCourse, "semeter": semeter});
+    _socket.on("messages", (msg) async => {messages = msg});
+    return messages;
   }
 }

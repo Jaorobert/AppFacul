@@ -1,7 +1,44 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
 
-class Chat extends StatelessWidget {
-  const Chat({super.key});
+import 'package:flutter/material.dart';
+import 'package:app_facul/src/data/services/socket-service.dart';
+
+class Chat extends StatefulWidget {
+  const Chat(
+      {super.key,
+      required this.idCourse,
+      required this.semeter,
+      required this.socket});
+
+  final idCourse, semeter;
+  final Socket socket;
+
+  @override
+  State<StatefulWidget> createState() {
+    // ignore: no_logic_in_create_state
+    return ChatState(socket: socket, idCourse: idCourse, semeter: semeter);
+  }
+}
+
+class ChatState extends State<Chat> {
+  final Socket socket;
+  final idCourse, semeter;
+  List messages = [];
+
+  ChatState(
+      {required this.socket, required this.idCourse, required this.semeter});
+
+  upMessage() async {
+    print("entouuuuuuuuuuuuuuuuu  aqiudjwakjdwkajdowajwjkapodkwapdkwpakdwalwk");
+    print("O usuario é $idCourse a sala é $semeter");
+    messages = await socket.chatMessage(idCourse, semeter);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    upMessage();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +74,8 @@ class MessageListScreen extends StatelessWidget {
     Colors.blue[200]!,
     Colors.blue[300]!,
   ];
+
+  MessageListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
