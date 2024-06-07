@@ -8,7 +8,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/src/response.dart';
 import '../../services/getSemeters.dart' as semetersService;
-
+import 'package:app_facul/src/pages/chat_page/chat.dart';
 void main() {
   runApp(const SemeterPage());
 }
@@ -103,7 +103,14 @@ class _SemetersState extends State<SemeterPage> {
                                       fontSize: 14,
                                     ),
                                   ),
-                                  onPressed: () => {},
+                                   onPressed: () => {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => Chat(),
+                                      ),
+                                    )
+                                  },
                                 ),
                               ),
                             );
