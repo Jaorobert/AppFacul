@@ -1,13 +1,16 @@
 import 'dart:async';
 import 'dart:ui';
-import 'package:app_facul/src/model/semeters.dart';
+import 'package:app_facul/src/data/model/semeters.dart';
+import 'package:app_facul/src/data/services/socket-service.dart';
+import 'package:app_facul/src/pages/chat_page/chat.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/src/response.dart';
-import '../../services/getSemeters.dart' as semetersService;
+import 'package:app_facul/src/data/services/getSemeters.dart'
+    as semetersService;
 
 void main() {
   runApp(const SemeterPage());
@@ -22,13 +25,14 @@ class SemeterPage extends StatefulWidget {
 }
 
 class _SemetersState extends State<SemeterPage> {
+  final Socket socketService = Socket();
   List<Semeter> _Semeters = [];
-  bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
     _futureSemeters();
+    socketService.socketInitialize();
   }
 
   _futureSemeters() async {
@@ -36,7 +40,6 @@ class _SemetersState extends State<SemeterPage> {
       final data = await semetersService.getSemeters();
       setState(() {
         _Semeters = data;
-        _isLoading = false;
       });
     } catch (err) {
       rethrow;
@@ -84,6 +87,19 @@ class _SemetersState extends State<SemeterPage> {
                               title: SizedBox(
                                 width: 100,
                                 child: ElevatedButton(
+                                  onPressed: () => {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => Chat(
+                                          semeter: _Semeters[index].semestre,
+                                          idCourse: _Semeters[index].id_curso,
+                                          socket: socketService,
+                                          idUser: _Semeters[index].id_user,
+                                        ),
+                                      ),
+                                    )
+                                  },
                                   style: ButtonStyle(
                                       shape: MaterialStateProperty.all(
                                           RoundedRectangleBorder(
@@ -103,7 +119,6 @@ class _SemetersState extends State<SemeterPage> {
                                       fontSize: 14,
                                     ),
                                   ),
-                                  onPressed: () => {},
                                 ),
                               ),
                             );
