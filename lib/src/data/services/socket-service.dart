@@ -9,7 +9,7 @@ class Socket extends ChangeNotifier {
   late final List<Message> listMessage = [];
 
   Socket() {
-    _socket = IO.io("http://192.168.237.68:4000",
+    _socket = IO.io("https://app-back-facul.onrender.com",
         IO.OptionBuilder().setTransports(['websocket']).build());
   }
 
