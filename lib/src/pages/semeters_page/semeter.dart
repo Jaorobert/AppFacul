@@ -27,7 +27,6 @@ class SemeterPage extends StatefulWidget {
 class _SemetersState extends State<SemeterPage> {
   final Socket socketService = Socket();
   List<Semeter> _Semeters = [];
-  bool _isLoading = true;
 
   @override
   void initState() {
@@ -41,7 +40,6 @@ class _SemetersState extends State<SemeterPage> {
       final data = await semetersService.getSemeters();
       setState(() {
         _Semeters = data;
-        _isLoading = false;
       });
     } catch (err) {
       rethrow;
@@ -94,9 +92,11 @@ class _SemetersState extends State<SemeterPage> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => Chat(
-                                            semeter: _Semeters[index].semestre,
-                                            idCourse: _Semeters[index].id_curso,
-                                            socket: socketService),
+                                          semeter: _Semeters[index].semestre,
+                                          idCourse: _Semeters[index].id_curso,
+                                          socket: socketService,
+                                          idUser: _Semeters[index].id_user,
+                                        ),
                                       ),
                                     )
                                   },

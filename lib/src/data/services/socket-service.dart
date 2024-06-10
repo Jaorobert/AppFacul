@@ -2,10 +2,11 @@ import 'dart:convert';
 
 import 'package:app_facul/src/data/model/message.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:flutter/material.dart';
 
-class Socket {
+class Socket extends ChangeNotifier {
   late IO.Socket _socket;
-  late final List<Message> _listMessage = [];
+  late final List<Message> listMessage = [];
 
   Socket() {
     _socket = IO.io("http://192.168.237.68:4000",
@@ -16,23 +17,11 @@ class Socket {
     _socket.onConnect((_) => print("connected"));
     _socket.onConnectError((error) => print("Error $error"));
     _socket.onDisconnect((_) => print("disconected"));
-    _socket.on("messages", (msg) async {
-      List<dynamic> messages = await msg;
-      for (var message in messages) {
-        _listMessage.add(Message.fromJson(message));
-      }
-    });
   }
 
-  getMessage() {
-    return _listMessage;
-  }
+  IO.Socket get socket => _socket;
 
   void connect() {
     _socket.connect();
-  }
-
-  chatMessage(idCourse, semeter) async {
-    _socket.emit("messages", {"idCourse": idCourse, "semeter": semeter});
   }
 }
