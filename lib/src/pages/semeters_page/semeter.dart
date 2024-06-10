@@ -8,9 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:http/src/response.dart';
-import 'package:app_facul/src/data/services/getSemeters.dart'
-    as semetersService;
+import 'package:app_facul/src/data/services/getSemeters.dart' as semetersService;
 
 void main() {
   runApp(const SemeterPage());
@@ -18,6 +16,7 @@ void main() {
 
 class SemeterPage extends StatefulWidget {
   const SemeterPage({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return _SemetersState();
@@ -27,6 +26,7 @@ class SemeterPage extends StatefulWidget {
 class _SemetersState extends State<SemeterPage> {
   final Socket socketService = Socket();
   List<Semeter> _Semeters = [];
+  bool _isLoading = true;
 
   @override
   void initState() {
@@ -40,8 +40,12 @@ class _SemetersState extends State<SemeterPage> {
       final data = await semetersService.getSemeters();
       setState(() {
         _Semeters = data;
+        _isLoading = false;
       });
     } catch (err) {
+      setState(() {
+        _isLoading = false;
+      });
       rethrow;
     }
   }
@@ -50,6 +54,15 @@ class _SemetersState extends State<SemeterPage> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        appBar: AppBar(
+          title: const Text("Semestre"),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ),
         body: Stack(
           children: [
             Container(
@@ -64,70 +77,106 @@ class _SemetersState extends State<SemeterPage> {
                 child: Container(),
               ),
             ),
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const Text(
-                    "Turma",
-                    style: TextStyle(fontSize: 40, fontWeight: FontWeight.w300),
-                  ),
-                  //const SizedBox(height: 20),
-
-                  SizedBox(
-                      child: Center(
-                    child: SizedBox(
-                      width: 270,
-                      height: 300,
-                      child: ListView.builder(
-                          itemCount: _Semeters.length,
-                          itemBuilder: (context, index) {
-                            return ListTile(
-                              title: SizedBox(
-                                width: 100,
-                                child: ElevatedButton(
-                                  onPressed: () => {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => Chat(
-                                          semeter: _Semeters[index].semestre,
-                                          idCourse: _Semeters[index].id_curso,
-                                          socket: socketService,
-                                          idUser: _Semeters[index].id_user,
+            _isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Text(
+                          "Olá, Pedro!",
+                          style: TextStyle(
+                              fontSize: 40, fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(
+                          width: 500,
+                          height: 300,
+                          child: ListView.builder(
+                            itemCount: _Semeters.length,
+                            itemBuilder: (context, index) {
+                              return ListTile(
+                                title: SizedBox(
+                                  width: 100,
+                                  child: ElevatedButton(
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all<Color>(
+                                              const Color.fromRGBO(72, 92, 57, 1)),
+                                      shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                        RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
                                         ),
                                       ),
-                                    )
-                                  },
-                                  style: ButtonStyle(
-                                      shape: MaterialStateProperty.all(
-                                          RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(5.0))),
                                       side: const MaterialStatePropertyAll(
                                           BorderSide.none),
                                       padding: const MaterialStatePropertyAll(
                                           EdgeInsets.only(
                                         bottom: 15,
                                         top: 15,
-                                      ))),
-                                  child: Text(
-                                    "${_Semeters[index].ds_curso!.toLowerCase()} - ${_Semeters[index].semestre.toString()} sem",
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 14,
+                                      )),
+                                    ),
+                                    onPressed: () => {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => Chat(
+                                            semeter:
+                                                _Semeters[index].semestre,
+                                            idCourse:
+                                                _Semeters[index].id_curso,
+                                            socket: socketService,
+                                            idUser: _Semeters[index].id_user,
+                                          ),
+                                        ),
+                                      )
+                                    },
+                                    child: Text(
+                                      "${_Semeters[index].ds_curso!.toLowerCase().split(' ').map((String word) => word.replaceFirst(word[0], word[0].toUpperCase())).join(' ')} - ${_Semeters[index].semestre.toString()} sem",
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                      ),
                                     ),
                                   ),
                                 ),
+                              );
+                            },
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                              Colors.black,
+                            ),
+                            shape:
+                                MaterialStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
                               ),
-                            );
-                          }),
+                            ),
+                          ),
+                          onPressed: () {
+                            // Adicione a ação desejada para o botão aqui
+                          },
+                          child: const Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 20),
+                            child: Text(
+                              "Chat UniCV",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  )),
-                ],
-              ),
-            ),
+                  ),
           ],
         ),
       ),
