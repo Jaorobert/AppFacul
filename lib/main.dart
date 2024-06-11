@@ -4,5 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 main() {
-  runApp(const AppWidget());
+  runApp(
+    const AppWidget(),
+  );
 }

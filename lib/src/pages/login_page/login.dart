@@ -1,8 +1,7 @@
 import 'dart:convert';
-import 'package:app_facul/src/pages/home_page/home_page.dart';
 import 'package:app_facul/src/pages/semeters_page/semeter.dart';
 import 'package:flutter/material.dart';
-import 'package:app_facul/src/services/api_login.dart';
+import 'package:app_facul/src/data/services/api_login.dart';
 import 'package:http/http.dart';
 
 class LoginPage extends StatefulWidget {
@@ -21,6 +20,8 @@ class _LoginState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    BuildContext? localContext = context;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Login'),
@@ -85,7 +86,6 @@ class _LoginState extends State<LoginPage> {
                         if (formKey.currentState!.validate()) {
                           formKey.currentState!.save();
 
-
                           try {
                             Response loginSuccess =
                                 await LoginServices.enviarAluno({
@@ -98,7 +98,7 @@ class _LoginState extends State<LoginPage> {
 
                             if (jsonLoginResponse['bo_login']) {
                               Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => const SemeterPage()));
+                                  builder: (context) => SemeterPage()));
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
@@ -109,7 +109,7 @@ class _LoginState extends State<LoginPage> {
                               );
                             }
                           } catch (error) {
-                            return print(error);
+                            print(error);
                           }
                         }
                       },

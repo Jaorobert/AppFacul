@@ -10,6 +10,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    BuildContext? localContext = context;
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -52,7 +53,7 @@ class HomePage extends StatelessWidget {
               _buildButton(
                 context,
                 "Coordenação",
-                () => Navigator.of(context).push(
+                () => Navigator.of(localContext).push(
                   MaterialPageRoute(builder: (context) => NotPage()),
                 ),
               ),
