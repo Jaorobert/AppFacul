@@ -14,7 +14,7 @@ Future<List<Semeter>> getSemeters() async {
   if (authorization != null) {
     try {
       final response = await http.get(
-        Uri.parse("http://192.168.237.68:4000/api/buscarSemestre"),
+        Uri.parse("https://app-back-facul.onrender.com/api/buscarSemestre"),
         headers: {
           "authorization": authorization,
           'Content-Type': 'application/json',
