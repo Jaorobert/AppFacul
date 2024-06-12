@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 import 'package:app_facul/src/data/model/semeters.dart';
+import 'package:app_facul/src/data/model/user.dart';
 import 'package:app_facul/src/data/services/socket-service.dart';
 import 'package:app_facul/src/pages/chat_page/chat.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,6 +24,7 @@ class SemeterPage extends StatefulWidget {
 class _SemetersState extends State<SemeterPage> {
   final Socket socketService = Socket();
   List<Semeter> _Semeters = [];
+  final user = User();
 
   @override
   void initState() {

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:app_facul/src/data/model/user.dart';
 import 'package:app_facul/src/pages/semeters_page/semeter.dart';
 import 'package:flutter/material.dart';
 import 'package:app_facul/src/data/services/api_login.dart';
@@ -17,7 +18,7 @@ class _LoginState extends State<LoginPage> {
   final formKey = GlobalKey<FormState>();
   final controleEmail = TextEditingController();
   final controleSenha = TextEditingController();
-
+  
   @override
   Widget build(BuildContext context) {
     BuildContext? localContext = context;
