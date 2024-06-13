@@ -1,4 +1,4 @@
-// ignore_for_file: no_logic_in_create_state, prefer_typing_uninitialized_variables
+import 'dart:io';
 
 import 'package:app_facul/src/data/model/message.dart';
 import 'package:app_facul/src/pages/chat_page/widgets/buttonSendMsg.dart';
@@ -24,16 +24,14 @@ class MessageListScreen extends StatefulWidget {
 
 class MessageState extends State<MessageListScreen> {
   final List<Color> bubbleColors = [
-    Colors.blue[100]!,
-    Colors.blue[200]!,
-    Colors.blue[300]!,
+    Colors.yellow[100]!,
+    Colors.yellow[200]!,
   ];
   final socket;
   List<Message> listMessages = [];
   final idCourse, semeter, idUser;
   final message = TextEditingController();
   var permissions;
-
   MessageState(
       {required this.socket,
       required this.idCourse,
@@ -87,7 +85,7 @@ class MessageState extends State<MessageListScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        backgroundColor: Colors.grey[200], // Fundo cinza
+        backgroundColor: Colors.grey[200],
         body: Column(
           children: [
             Expanded(
@@ -100,7 +98,7 @@ class MessageState extends State<MessageListScreen> {
                     child: Container(
                       padding: const EdgeInsets.all(16.0),
                       decoration: BoxDecoration(
-                        color: Colors.white, // Cor do balão
+                        color: Colors.white,
                         borderRadius: BorderRadius.circular(8.0),
                         boxShadow: const [
                           BoxShadow(
@@ -133,10 +131,10 @@ class MessageState extends State<MessageListScreen> {
                   width: 379,
                   height: 63,
                   child: MessageWidget(
-                    idUser: this.idUser,
-                    idCourse: this.idCourse,
-                    semeter: this.semeter,
-                    socket: this.socket,
+                    idUser: idUser,
+                    idCourse: idCourse,
+                    semeter: semeter,
+                    socket: socket,
                   )),
           ],
         ),
