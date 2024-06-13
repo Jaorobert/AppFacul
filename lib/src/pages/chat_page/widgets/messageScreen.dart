@@ -1,5 +1,3 @@
-// ignore_for_file: no_logic_in_create_state, prefer_typing_uninitialized_variables
-
 import 'package:app_facul/src/data/model/message.dart';
 import 'package:app_facul/src/pages/chat_page/widgets/buttonSendMsg.dart';
 import 'package:flutter/material.dart';
@@ -87,7 +85,7 @@ class MessageState extends State<MessageListScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        backgroundColor: Colors.grey[200], // Fundo cinza
+        backgroundColor: Colors.grey[200],
         body: Column(
           children: [
             Expanded(
@@ -100,7 +98,7 @@ class MessageState extends State<MessageListScreen> {
                     child: Container(
                       padding: const EdgeInsets.all(16.0),
                       decoration: BoxDecoration(
-                        color: Colors.white, // Cor do balão
+                        color: Colors.white,
                         borderRadius: BorderRadius.circular(8.0),
                         boxShadow: const [
                           BoxShadow(
@@ -133,10 +131,10 @@ class MessageState extends State<MessageListScreen> {
                   width: 379,
                   height: 63,
                   child: MessageWidget(
-                    idUser: this.idUser,
-                    idCourse: this.idCourse,
-                    semeter: this.semeter,
-                    socket: this.socket,
+                    idUser: idUser,
+                    idCourse: idCourse,
+                    semeter: semeter,
+                    socket: socket,
                   )),
           ],
         ),

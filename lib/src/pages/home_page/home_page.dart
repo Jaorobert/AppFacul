@@ -1,90 +1,168 @@
+import 'dart:convert';
+import 'dart:ui';
+import 'package:app_facul/src/pages/semeters_page/semeter.dart';
 import 'package:flutter/material.dart';
-import 'package:app_facul/src/pages/login_page/login.dart';
-import 'package:app_facul/src/pages/notificationsPage/notificationsPage.dart';
+import 'package:app_facul/src/data/services/api_login.dart';
+import 'package:http/http.dart';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/widgets.dart';
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  @override
+  State<StatefulWidget> createState() {
+    return _LoginState();
+  }
+}
+
+class _LoginState extends State<LoginPage> {
+  final formKey = GlobalKey<FormState>();
+  final controleEmail = TextEditingController();
+  final controleSenha = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    BuildContext? localContext = context;
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/imgs/fachada.jpg'),
-            fit: BoxFit.cover,
-            opacity: 0.5,
+      body: Stack(
+        children: [
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/imgs/fachada.jpg'),
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
-        ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                "UniCV Recados",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 40,
-                  color: Color.fromRGBO(72, 92, 57, 1),
-                  decoration: TextDecoration.none,
-                ),
-              ),
-              const SizedBox(height: 50),
-              _buildButton(
-                context,
-                "Aluno",
-                () => Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const LoginPage()),
-                ),
-              ),
-              const SizedBox(height: 10),
-              _buildButton(
-                context,
-                "Professor",
-                () => Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const LoginPage()),
-                ),
-              ),
-              const SizedBox(height: 10),
-              _buildButton(
-                context,
-                "Coordenação",
-                () => Navigator.of(localContext).push(
-                  MaterialPageRoute(builder: (context) => NotPage()),
-                ),
-              ),
-            ],
+          BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+            child: Container(
+              color: Colors.black.withOpacity(0.3),
+            ),
           ),
-        ),
-      ),
-    );
-  }
+          Center(
+            child: Container(
+              margin: const EdgeInsets.all(20),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20,
+                vertical: 40,
+              ),
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.8),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: ListView(
+                shrinkWrap: true,
+                children: [
+                  SizedBox(
+                    width: 128,
+                    height: 128,
+                    child: Image.asset('assets/imgs/logo-unicc.png'),
+                  ),
+                  const SizedBox(height: 20),
+                  Form(
+                    key: formKey,
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          controller: controleEmail,
+                          decoration: const InputDecoration(
+                            labelText: 'RA ou E-mail',
+                            labelStyle: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 20,
+                            ),
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Campo obrigatório';
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(height: 10),
+                        TextFormField(
+                          controller: controleSenha,
+                          decoration: const InputDecoration(
+                            labelText: 'Senha:',
+                            labelStyle: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 20,
+                            ),
+                          ),
+                          obscureText: true,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Campo obrigatório';
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(height: 20),
+                        ElevatedButton(
+                          onPressed: () async {
+                            if (formKey.currentState!.validate()) {
+                              formKey.currentState!.save();
 
-  Widget _buildButton(
-      BuildContext context, String text, VoidCallback onPressed) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all<Color>(
-            const Color.fromRGBO(72, 92, 57, 1)),
-        fixedSize: MaterialStateProperty.all<Size>(const Size(200, 60)),
-        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
+                              try {
+                                Response loginSuccess =
+                                    await LoginServices.enviarAluno({
+                                  'email': controleEmail.text,
+                                  'password': controleSenha.text,
+                                });
+
+                                final Map<String, dynamic> jsonLoginResponse =
+                                    json.decode(loginSuccess.body);
+
+                                if (jsonLoginResponse['bo_login']) {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => SemeterPage()));
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text(
+                                          'Falha no login! Login e/ou Senha incorretos!'),
+                                      backgroundColor: Colors.red,
+                                    ),
+                                  );
+                                }
+                              } catch (error) {
+                                print(error);
+                              }
+                            }
+                          },
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                              const Color.fromRGBO(72, 92, 57, 1),
+                            ),
+                            fixedSize: MaterialStateProperty.all<Size>(
+                              const Size(150, 35),
+                            ),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                          ),
+                          child: const Text(
+                            'Entrar',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        TextButton(
+                          onPressed: () {},
+                          child: const Text('Esqueci a senha.'),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
-        ),
-      ),
-      child: Text(
-        text,
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
-        ),
+        ],
       ),
     );
   }
