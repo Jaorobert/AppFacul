@@ -11,9 +11,10 @@ import 'package:flutter/widgets.dart';
 import 'package:http/src/response.dart';
 import 'package:app_facul/src/data/services/getSemeters.dart'
     as semetersService;
-import 'package:app_facul/src/pages/chat_page/chat.dart';
 
 class SemeterPage extends StatefulWidget {
+  const SemeterPage({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return _SemetersState();
@@ -47,7 +48,16 @@ class _SemetersState extends State<SemeterPage> {
     BuildContext? localContext = context;
     return Scaffold(
       appBar: AppBar(
-        title: Text(''),
+        title: const Text(
+          'Turma',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: const Color.fromRGBO(72, 92, 57, 1),
+        iconTheme: const IconThemeData(
+          color: Colors.white,
+        ),
       ),
       body: Stack(
         children: [
@@ -68,18 +78,12 @@ class _SemetersState extends State<SemeterPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Text(
-                  "Turma",
-                  style: TextStyle(fontSize: 40, fontWeight: FontWeight.w300),
-                ),
-                //const SizedBox(height: 20),
-
                 SizedBox(
-                    child: Center(
-                  child: SizedBox(
-                    width: 270,
-                    height: 300,
-                    child: ListView.builder(
+                  child: Center(
+                    child: SizedBox(
+                      width: 270,
+                      height: 300,
+                      child: ListView.builder(
                         itemCount: _Semeters.length,
                         itemBuilder: (context, index) {
                           return ListTile(
@@ -87,7 +91,7 @@ class _SemetersState extends State<SemeterPage> {
                               width: 100,
                               child: ElevatedButton(
                                 onPressed: () => {
-                                  Navigator.of(localContext!).push(
+                                  Navigator.of(localContext).push(
                                     MaterialPageRoute(
                                       builder: (context) => Chat(
                                         semeter: _Semeters[index].semestre,
@@ -99,30 +103,39 @@ class _SemetersState extends State<SemeterPage> {
                                   )
                                 },
                                 style: ButtonStyle(
-                                    shape: MaterialStateProperty.all(
-                                        RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(5.0))),
-                                    side: const MaterialStatePropertyAll(
-                                        BorderSide.none),
-                                    padding: const MaterialStatePropertyAll(
-                                        EdgeInsets.only(
+                                  backgroundColor: MaterialStateProperty.all(
+                                    const Color.fromRGBO(72, 92, 57, 1),
+                                  ),
+                                  shape: MaterialStateProperty.all(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                    ),
+                                  ),
+                                  side: const MaterialStatePropertyAll(
+                                    BorderSide.none,
+                                  ),
+                                  padding: const MaterialStatePropertyAll(
+                                    EdgeInsets.only(
                                       bottom: 15,
                                       top: 15,
-                                    ))),
+                                    ),
+                                  ),
+                                ),
                                 child: Text(
-                                  "${_Semeters[index].ds_curso!.toLowerCase()} - ${_Semeters[index].semestre.toString()} sem",
+                                  "${_Semeters[index].ds_curso!.toLowerCase()} - ${_Semeters[index].semestre} sem",
                                   style: const TextStyle(
-                                    color: Colors.black,
+                                    color: Colors.white,
                                     fontSize: 14,
                                   ),
                                 ),
                               ),
                             ),
                           );
-                        }),
+                        },
+                      ),
+                    ),
                   ),
-                )),
+                ),
               ],
             ),
           ),

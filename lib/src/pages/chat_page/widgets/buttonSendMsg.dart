@@ -5,7 +5,8 @@ class MessageWidget extends StatelessWidget {
   final socket, idCourse, semeter, idUser;
 
   MessageWidget(
-      {required this.socket,
+      {super.key,
+      required this.socket,
       required this.idCourse,
       required this.semeter,
       required this.idUser});
@@ -53,7 +54,7 @@ class MessageWidget extends StatelessWidget {
                     ),
                     Container(
                       decoration: const BoxDecoration(
-                        color: Colors.green, // Cor do botão alterada para verde
+                        color: Color.fromRGBO(72, 92, 57, 1),
                         borderRadius: BorderRadius.only(
                           topRight: Radius.circular(16.0),
                           bottomRight: Radius.circular(16.0),

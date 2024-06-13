@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_typing_uninitialized_variables
-
 import 'dart:io';
 
 import 'package:app_facul/src/data/model/message.dart';
@@ -23,7 +21,6 @@ class Chat extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    // ignore: no_logic_in_create_state
     return ChatState(
       socket: socket,
       idCourse: idCourse,
@@ -58,6 +55,9 @@ class ChatState extends State<Chat> {
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: const Color.fromRGBO(72, 92, 57, 1),
+        iconTheme: const IconThemeData(
+          color: Colors.white,
+        ),
       ),
       body: MessageListScreen(
         socket: socket,

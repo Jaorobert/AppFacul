@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:app_facul/src/pages/login_page/login.dart';
-import 'package:app_facul/src/pages/notificationsPage/notificationsPage.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
@@ -54,7 +53,7 @@ class HomePage extends StatelessWidget {
                 context,
                 "Coordenação",
                 () => Navigator.of(localContext).push(
-                  MaterialPageRoute(builder: (context) => NotPage()),
+                  MaterialPageRoute(builder: (context) => const LoginPage()),
                 ),
               ),
             ],
