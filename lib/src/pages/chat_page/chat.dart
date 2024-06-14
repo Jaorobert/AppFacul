@@ -21,6 +21,7 @@ class Chat extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
+    // ignore: no_logic_in_create_state
     return ChatState(
       socket: socket,
       idCourse: idCourse,
@@ -60,11 +61,7 @@ class ChatState extends State<Chat> {
         ),
       ),
       body: MessageListScreen(
-        socket: socket,
-        idCourse: idCourse,
-        semeter: semeter,
-        idUser: idUser,
-      ),
+          socket: socket, idCourse: idCourse, semeter: semeter, idUser: idUser),
     );
   }
 }

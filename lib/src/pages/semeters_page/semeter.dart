@@ -94,11 +94,10 @@ class _SemetersState extends State<SemeterPage> {
                                   Navigator.of(localContext).push(
                                     MaterialPageRoute(
                                       builder: (context) => Chat(
-                                        semeter: _Semeters[index].semestre,
-                                        idCourse: _Semeters[index].id_curso,
-                                        socket: socketService,
-                                        idUser: _Semeters[index].id_user,
-                                      ),
+                                          semeter: _Semeters[index].semestre,
+                                          idCourse: _Semeters[index].id_curso,
+                                          socket: socketService,
+                                          idUser: _Semeters[index].id_user),
                                     ),
                                   )
                                 },

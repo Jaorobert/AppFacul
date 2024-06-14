@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:intl/intl.dart';
 import 'package:app_facul/src/data/model/message.dart';
 import 'package:app_facul/src/pages/chat_page/widgets/buttonSendMsg.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +17,7 @@ class MessageListScreen extends StatefulWidget {
 
   @override
   State<MessageListScreen> createState() {
+    // ignore: no_logic_in_create_state
     return MessageState(
         socket: socket, idCourse: idCourse, semeter: semeter, idUser: idUser);
   }
@@ -27,10 +28,13 @@ class MessageState extends State<MessageListScreen> {
     Colors.yellow[100]!,
     Colors.yellow[200]!,
   ];
+  // ignore: prefer_typing_uninitialized_variables
   final socket;
   List<Message> listMessages = [];
+  // ignore: prefer_typing_uninitialized_variables
   final idCourse, semeter, idUser;
   final message = TextEditingController();
+  // ignore: prefer_typing_uninitialized_variables
   var permissions;
   MessageState(
       {required this.socket,
@@ -55,7 +59,7 @@ class MessageState extends State<MessageListScreen> {
       try {
         List<dynamic> messages = await msg;
         setState(() {
-          listMessages = messages.map((msg) => Message.fromJson(msg)).toList();
+          listMessages = messages.map((m) => Message.fromJson(m)).toList();
         });
       } catch (error) {
         return print(error);
@@ -92,10 +96,8 @@ class MessageState extends State<MessageListScreen> {
               child: ListView.builder(
                 itemCount: listMessages.length,
                 itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 8.0, vertical: 4.0),
-                    child: Container(
+                  return ListTile(
+                    title: Container(
                       padding: const EdgeInsets.all(16.0),
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -108,18 +110,46 @@ class MessageState extends State<MessageListScreen> {
                           ),
                         ],
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            listMessages[index].message ?? "",
-                            style: const TextStyle(
-                                color: Colors.black,
-                                fontFamily: AutofillHints.birthday),
-                          ),
-                          const SizedBox(height: 5.0),
-                        ],
+                      child: Expanded(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                                width: 285,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      listMessages[index].name ?? "",
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 5.0),
+                                    Text(
+                                      listMessages[index].message ?? "",
+                                      style: const TextStyle(
+                                        color: Colors.black,
+                                        fontFamily: 'Arial',
+                                        fontSize: 16.0,
+                                      ),
+                                    ),
+                                  ],
+                                )),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 0.2),
+                              child: Text(
+                                "${listMessages[index].createdAt?.hour}:${listMessages[index].createdAt?.minute}",
+                                style: const TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 12.0,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   );

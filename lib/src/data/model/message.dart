@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:intl/intl.dart';
 
 class Message {
   final int? idMessage;
@@ -8,6 +9,7 @@ class Message {
   final int? semeter;
   final DateTime? createdAt;
   final DateTime? updatedAt;
+  final String? name;
 
   Message(
       {required this.idMessage,
@@ -16,7 +18,8 @@ class Message {
       required this.idCourse,
       required this.semeter,
       required this.createdAt,
-      required this.updatedAt});
+      required this.updatedAt,
+      required this.name});
 
   factory Message.fromJson(Map<String, dynamic> message) {
     return Message(
@@ -25,7 +28,8 @@ class Message {
         idUser: message['id_pessoa'],
         idCourse: message['id_curso'],
         semeter: message['semestre'],
-        createdAt: DateTime.parse(message['createdAt']),
-        updatedAt: DateTime.parse(message['updatedAt']));
+        createdAt: DateTime.parse(message['createdAt']).toLocal(),
+        updatedAt: DateTime.parse(message['updatedAt']).toLocal(),
+        name: message['nome']);
   }
 }
