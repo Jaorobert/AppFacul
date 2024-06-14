@@ -11,6 +11,7 @@ import 'package:flutter/widgets.dart';
 import 'package:http/src/response.dart';
 import 'package:app_facul/src/data/services/getSemeters.dart'
     as semetersService;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SemeterPage extends StatefulWidget {
   const SemeterPage({super.key});
@@ -25,11 +26,13 @@ class _SemetersState extends State<SemeterPage> {
   final Socket socketService = Socket();
   List<Semeter> _Semeters = [];
   bool isLoading = false;
+  var permissionsCoordination = false;
 
   @override
   void initState() {
     super.initState();
     _futureSemeters();
+    _loadPermissions();
     socketService.socketInitialize();
   }
 
@@ -37,7 +40,6 @@ class _SemetersState extends State<SemeterPage> {
     setState(() {
       isLoading = true;
     });
-
     try {
       final data = await semetersService.getSemeters();
       setState(() {
@@ -50,6 +52,36 @@ class _SemetersState extends State<SemeterPage> {
       });
       rethrow;
     }
+  }
+
+  Future<void> _loadPermissions() async {
+    final shared = await SharedPreferences.getInstance();
+    var isCoordination = shared.getBool('bo_coordenacao') ?? false;
+    setState(() {
+      permissionsCoordination = isCoordination;
+    });
+    didChangeDependencies();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (permissionsCoordination) {
+      _navigateToChat();
+    }
+  }
+
+  void _navigateToChat() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => Chat(
+          semeter: 5,
+          idCourse: 1,
+          socket: socketService,
+          idUser: _Semeters[0].id_user,
+        ),
+      ),
+    );
   }
 
   @override
@@ -114,19 +146,19 @@ class _SemetersState extends State<SemeterPage> {
                                     )
                                   },
                                   style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
+                                    backgroundColor: WidgetStateProperty.all(
                                       const Color.fromRGBO(72, 92, 57, 1),
                                     ),
-                                    shape: MaterialStateProperty.all(
+                                    shape: WidgetStateProperty.all(
                                       RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(5.0),
                                       ),
                                     ),
-                                    side: const MaterialStatePropertyAll(
+                                    side: const WidgetStatePropertyAll(
                                       BorderSide.none,
                                     ),
-                                    padding: const MaterialStatePropertyAll(
+                                    padding: const WidgetStatePropertyAll(
                                       EdgeInsets.only(
                                         bottom: 15,
                                         top: 15,
@@ -143,6 +175,7 @@ class _SemetersState extends State<SemeterPage> {
                                 ),
                               ),
                             );
+                            return null;
                           },
                         ),
                       ),

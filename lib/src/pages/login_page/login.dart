@@ -4,6 +4,7 @@ import 'package:app_facul/src/pages/semeters_page/semeter.dart';
 import 'package:flutter/material.dart';
 import 'package:app_facul/src/data/services/api_login.dart';
 import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -141,14 +142,14 @@ class _LoginState extends State<LoginPage> {
                             }
                           },
                           style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all<Color>(
+                            backgroundColor: WidgetStateProperty.all<Color>(
                               const Color.fromRGBO(72, 92, 57, 1),
                             ),
-                            fixedSize: MaterialStateProperty.all<Size>(
+                            fixedSize: WidgetStateProperty.all<Size>(
                               const Size(150, 35),
                             ),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
+                            shape:
+                                WidgetStateProperty.all<RoundedRectangleBorder>(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
