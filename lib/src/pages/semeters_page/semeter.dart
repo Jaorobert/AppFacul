@@ -24,6 +24,7 @@ class SemeterPage extends StatefulWidget {
 class _SemetersState extends State<SemeterPage> {
   final Socket socketService = Socket();
   List<Semeter> _Semeters = [];
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -33,12 +34,20 @@ class _SemetersState extends State<SemeterPage> {
   }
 
   _futureSemeters() async {
+    setState(() {
+      isLoading = true;
+    });
+
     try {
       final data = await semetersService.getSemeters();
       setState(() {
         _Semeters = data;
+        isLoading = false;
       });
     } catch (err) {
+      setState(() {
+        isLoading = false;
+      });
       rethrow;
     }
   }
@@ -78,63 +87,67 @@ class _SemetersState extends State<SemeterPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(
-                  child: Center(
-                    child: SizedBox(
-                      width: 270,
-                      height: 300,
-                      child: ListView.builder(
-                        itemCount: _Semeters.length,
-                        itemBuilder: (context, index) {
-                          return ListTile(
-                            title: SizedBox(
-                              width: 100,
-                              child: ElevatedButton(
-                                onPressed: () => {
-                                  Navigator.of(localContext).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => Chat(
+                if (isLoading) CircularProgressIndicator(),
+                if (!isLoading)
+                  SizedBox(
+                    child: Center(
+                      child: SizedBox(
+                        width: 270,
+                        height: 300,
+                        child: ListView.builder(
+                          itemCount: _Semeters.length,
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                              title: SizedBox(
+                                width: 100,
+                                child: ElevatedButton(
+                                  onPressed: () => {
+                                    Navigator.of(localContext).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => Chat(
                                           semeter: _Semeters[index].semestre,
                                           idCourse: _Semeters[index].id_curso,
                                           socket: socketService,
-                                          idUser: _Semeters[index].id_user),
+                                          idUser: _Semeters[index].id_user,
+                                        ),
+                                      ),
+                                    )
+                                  },
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(
+                                      const Color.fromRGBO(72, 92, 57, 1),
                                     ),
-                                  )
-                                },
-                                style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all(
-                                    const Color.fromRGBO(72, 92, 57, 1),
-                                  ),
-                                  shape: MaterialStateProperty.all(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(5.0),
+                                    shape: MaterialStateProperty.all(
+                                      RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(5.0),
+                                      ),
+                                    ),
+                                    side: const MaterialStatePropertyAll(
+                                      BorderSide.none,
+                                    ),
+                                    padding: const MaterialStatePropertyAll(
+                                      EdgeInsets.only(
+                                        bottom: 15,
+                                        top: 15,
+                                      ),
                                     ),
                                   ),
-                                  side: const MaterialStatePropertyAll(
-                                    BorderSide.none,
-                                  ),
-                                  padding: const MaterialStatePropertyAll(
-                                    EdgeInsets.only(
-                                      bottom: 15,
-                                      top: 15,
+                                  child: Text(
+                                    "${_Semeters[index].ds_curso!.toLowerCase()} - ${_Semeters[index].semestre} sem",
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
                                     ),
-                                  ),
-                                ),
-                                child: Text(
-                                  "${_Semeters[index].ds_curso!.toLowerCase()} - ${_Semeters[index].semestre} sem",
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 14,
                                   ),
                                 ),
                               ),
-                            ),
-                          );
-                        },
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ),
-                ),
               ],
             ),
           ),
