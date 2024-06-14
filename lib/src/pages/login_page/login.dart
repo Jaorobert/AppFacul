@@ -18,6 +18,7 @@ class _LoginState extends State<LoginPage> {
   final formKey = GlobalKey<FormState>();
   final controleEmail = TextEditingController();
   final controleSenha = TextEditingController();
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -103,6 +104,9 @@ class _LoginState extends State<LoginPage> {
                           onPressed: () async {
                             if (formKey.currentState!.validate()) {
                               formKey.currentState!.save();
+                              setState(() {
+                                isLoading = true;
+                              });
 
                               try {
                                 Response loginSuccess =
@@ -129,6 +133,10 @@ class _LoginState extends State<LoginPage> {
                                 }
                               } catch (error) {
                                 print(error);
+                              } finally {
+                                setState(() {
+                                  isLoading = false;
+                                });
                               }
                             }
                           },
@@ -146,10 +154,12 @@ class _LoginState extends State<LoginPage> {
                               ),
                             ),
                           ),
-                          child: const Text(
-                            'Entrar',
-                            style: TextStyle(color: Colors.white),
-                          ),
+                          child: isLoading
+                              ? CircularProgressIndicator()
+                              : const Text(
+                                  'Entrar',
+                                  style: TextStyle(color: Colors.white),
+                                ),
                         ),
                         const SizedBox(height: 10),
                         TextButton(
